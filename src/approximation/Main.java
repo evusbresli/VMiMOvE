@@ -38,7 +38,7 @@ public class Main {
         double differences[][] = DividedDifferences.calculate(X, Y);
         System.out.printf("|%1$10s | %2$10s | %3$10s |\n", "f(xj)", "ф(xj, c)", "d(xj)");
         for (double x : Xj) {
-            System.out.printf("|%10.4f ", calculateY(x));
+            System.out.printf("%10.4f |%10.4f ", x, calculateY(x));
 
             double N = Y[0];
             double polinom = 1;
@@ -54,13 +54,13 @@ public class Main {
 
 
     private static double calculateY(double x){
-        return Math.pow(Math.sin(x), 2) - x / 5;
-        //return Math.sin(x);
+        //return Math.pow(Math.sin(x), 2) - x / 5;
+        return Math.sin(x);
     }
 
     private static double[] calculateXj(double a, double b){
-        double Xj[] = new double[20];
-        for (int j = 0; j < 20; j++){
+        double Xj[] = new double[21];
+        for (int j = 0; j < 21; j++){
             Xj[j] = a + j * (b - a) / 20;
         }
 

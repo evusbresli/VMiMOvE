@@ -1,8 +1,8 @@
 package approximation;
 
-class DividedDifferences {
+public class DividedDifferences {
 
-    static double[][] calculate(double[] X, double[] Y){
+    public static double[][] calculate(double[] X, double[] Y){
         int n = X.length - 1;
         double differences[][] = new double[n][n];
 
@@ -18,7 +18,7 @@ class DividedDifferences {
             k++;
         }
 
-        print(differences, n);
+        //print(differences, n);
 
         return differences;
     }
