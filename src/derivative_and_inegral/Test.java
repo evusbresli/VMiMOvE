@@ -2,8 +2,7 @@ package derivative_and_inegral;
 
 import approximation.DividedDifferences;
 
-import static derivative_and_inegral.Main.calculateY;
-import static derivative_and_inegral.Main.calculateYj;
+import static derivative_and_inegral.Derivative.calculateYj;
 
 public class Test {
     public static void main(String[] args) {
