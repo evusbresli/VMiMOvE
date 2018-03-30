@@ -83,26 +83,3 @@ public class Integral {
         return sum;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

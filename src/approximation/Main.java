@@ -13,7 +13,8 @@ public class Main {
         System.out.print("\ta:=");
         double a = reader.nextInt();
         System.out.print("\tb:=");
-        double b = reader.nextInt();
+        double b;
+        b = reader.nextInt();
         System.out.print("\tm:=");
         int m = reader.nextInt();
 

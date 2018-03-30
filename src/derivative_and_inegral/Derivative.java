@@ -10,7 +10,8 @@ public class Derivative {
 
         System.out.println("\nВведите интервал значений x:");
         System.out.print("\ta:=");
-        double a = reader.nextInt();
+        double a;
+        a = reader.nextInt();
         System.out.print("\tb:=");
         double b = reader.nextInt();
 
@@ -29,7 +30,7 @@ public class Derivative {
         return X;
     }
 
-    static double[] calculateYj(double[] X){
+    private static double[] calculateYj(double[] X){
         double Y[] = new double[X.length];
         for (int j = 0; j < X.length; j++){
             Y[j] = calculateY(X[j]);
