@@ -27,8 +27,8 @@ public abstract class MatrixMultiplection {
 
         double[][] mB =
                 {{0.4597},
-                        {0.6280},
-                        {0.6280}};
+                        {-0.6280},
+                        {-0.6280}};
 
 
 

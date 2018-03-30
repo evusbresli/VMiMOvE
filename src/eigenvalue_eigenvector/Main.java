@@ -28,7 +28,12 @@ public class Main {
             int jInd = (int) diagMax[2];
 
             if (diagMax[0] > eps){
-                double fi = 0.5 * Math.atan((2 * max) / (A[iInd][iInd] - A[jInd][jInd]));
+                double fi;
+                if (A[iInd][iInd] == A[jInd][jInd]){
+                    fi = Math.PI / 4;
+                } else {
+                    fi = 0.5 * Math.atan((2 * max) / (A[iInd][iInd] - A[jInd][jInd]));
+                }
                 double sinFi = Math.sin(fi);
                 double cosFi = Math.cos(fi);
                 H = modeH(H, sinFi, cosFi, iInd, jInd);
