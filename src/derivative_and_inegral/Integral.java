@@ -39,7 +39,7 @@ public class Integral {
     private static double[] calculateY(double[] X){
         double Y[] = new double[X.length];
         for (int i = 0; i < X.length; i++){
-            Y[i] = Math.pow(Math.sin(X[i]), 2) - X[i] / 5;
+            //Y[i] = Math.pow(Math.sin(X[i]), 2) - X[i] / 5;
             //Y[i] = X[i] / (Math.pow(X[i], 4) + 4);
             Y[i] = 4 * Math.pow(X[i], 3);
         }

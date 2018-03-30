@@ -21,12 +21,14 @@ public abstract class MatrixMultiplection {
 
     public static void main(String[] args) {
         double[][] mA =
-                {{-1, -6},
-                        {2, 6}};
+                {{1, 1, 1},
+                        {1, 1, 2},
+                        {1, 2, 1}};
 
         double[][] mB =
-                {{2},
-                        {-1}};
+                {{0.4597},
+                        {0.6280},
+                        {0.6280}};
 
 
 
@@ -34,7 +36,7 @@ public abstract class MatrixMultiplection {
 
         for (double[] re : res) {
             for (int j = 0; j < res[0].length; j++) {
-                System.out.format("%6.3f ", re[j]);
+                System.out.format("%6.3f ", re[j] );
             }
             System.out.println();
         }
