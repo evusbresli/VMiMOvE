@@ -9,118 +9,83 @@ public class Main {
         double[] F = new double[ny];
         F[0] = Y[0] / x + Y[1] - Math.pow(Math.E, x);
         F[1] = (((2 * x) / Y[0]) + (Math.pow(Y[1], 2) / Math.pow(Math.E, x))) - 1;
-//        F[0] = Y[0] * ((1 / (2 * x)) - 1);
         return F;
     }
 
     private static void OUT(double x, double[] Y){
-        System.out.printf("x=%.4f  y1=%.4f  u1=%.4f  d1=%.4f  y2=%.4f  u2=%.4f  d2=%.4f\n",
+        System.out.printf("x=%.4f  y1=%.6f  u1=%.6f  d1=%.6f  y2=%.6f  u2=%.6f  d2=%.6f\n",
                 x, Y[0], 2 * x, (2 * x) - Y[0], Y[1], Math.pow(Math.E, x), Math.pow(Math.E, x) - Y[1]);
-//        System.out.printf("x=%.4f  y1=%.4f  u1=%.4f  d1=%.4f\n",
-//                x, Y[0], 2 * x, (2 * x) - Y[0]);
     }
 
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
-        int k; double de, d, z;
 
         System.out.println("\nВведите интервал значений x:");
         System.out.print("\ta:=");
-        //double a = reader.nextDouble();
-        double a = 1;
+        double a = reader.nextDouble();
         System.out.print("\tb:=");
-        //double b = reader.nextDouble();
-        double b = 4;
+        double b = reader.nextDouble();
         System.out.print("\nВведите количество шагов сетки: ");
-        //int nx = reader.nextInt();
-        int nx = 10;
+        int nx = reader.nextInt();
         System.out.print("\nВведите количество уравнений: ");
-        //ny = reader.nextInt();
-        ny = 2;
-        System.out.print("\nВведите максимально допустимое количество итераций: ");
-        //int nit = reader.nextInt();
-        int nit = 10000;
-        System.out.print("\nВведите точность: \n");
-        //double eps = reader.nextDouble();
-        double eps = 0.0001;
+        ny = reader.nextInt();
 
         double h = (b - a) / nx;
         double X = a;
 
-        double[] Y = new double[ny];
-        Y[0] = a * 2; Y[1] = Math.pow(Math.E, a);
-        //Y[0] = 2.70;
-        OUT(X, Y);
-        double[] Y1 = Rungie_Kutt.calculate(X, Y, h, ny);
-        X += h;
-        OUT(X, Y1);
-        double[] Y2 = Rungie_Kutt.calculate(X, Y1, h, ny);
-        X += h;
-        OUT(X, Y2);
-        double[] Y3 = Rungie_Kutt.calculate(X, Y2, h, ny);
-        X += h;
-        OUT(X, Y3);
+        double[][] Y = new double[nx + 1][ny];
+        double[][] F = new double[nx + 1][ny];
+        double[][] DF = new double[nx + 1][ny];
+        double[][] D2F = new double[nx + 1][ny];
+        double[][] D3F = new double[nx + 1][ny];
 
+        Y[0][0] = a * 2;
+        Y[0][1] = Math.pow(Math.E, a);
+        F[0] = FPR(X, Y[0]);
+        OUT(X, Y[0]);
 
-//        double[] Fm = FPR(X, Y);
-//
-//        X += h / 2;
-//
-//        double[] Yp = new double[ny];
-//        for (int i = 0; i < ny; i++){
-//            Yp[i] = Y[i] + ((h / 2) * Fm[i]);
-//        }
-//
-//        double[] Fp1 = FPR(X, Yp);
-//
-//        for (int i = 0; i < ny; i++){
-//            Yp[i] = Y[i] + ((h / 2) * Fp1[i]);
-//        }
-//
-//        double[] Fp2 = FPR(X, Yp);
-//
-//        for (int i = 0; i < ny; i++){
-//            Yp[i] = Y[i] + (h * Fp2[i]);
-//        }
-//
-//        X += h / 2;
-//
-//        double[] Fp = FPR(X, Yp);
-//
-//        for (int i = 0; i < ny; i++){
-//            Yp[i] = Y[i] + h / 6 * (Fm[i] + (2 * Fp1[i]) + (2 * Fp2[i]) + Fp[i]);
-//        }
-//
-//        OUT(X, Y);
-//
-//        Fp = FPR(X, Yp);
-//
-//        for (int n = 2; n <= nx; n++){
-//            for (int i = 0; i < ny; i++){
-//                Y[i] = Yp[i] + h * (1.5 * Fp[i] - 0.5 * Fm[i]);
-//            }
-//
-//            X += h;
-//            double[] F = FPR(X, Y);
-//            k = 0;
-//            do {
-//                k++; de = 0;
-//                for (int i = 0; i < ny; i++){
-//                    z = Yp[i] + h * ((5 / 12 * F[i]) + (8 / 12 * Fp[i]) + (1 / 12 * Fm[i]));
-//                    d = Math.abs(z - Y[i]);
-//                    Y[i] = z;
-//                    if (d > de)
-//                        de = d;
-//                }
-//
-//                F = FPR(X, Y);
-//            } while (k <= nit || de >= eps);
-//
-//            Yp = Y;
-//            Fm = Fp;
-//            Fp = F;
-//
-//            OUT(X, Y);
-//        }
+        Y[1] = Rungie_Kutt.calculate(X, Y[0], h, ny);
+        X += h;
+        F[1] = FPR(X, Y[1]);
+        for (int i = 0; i < ny; i++){
+            DF[1][i] = F[1][i] - F[0][i];
+        }
+        OUT(X, Y[1]);
+
+        Y[2] = Rungie_Kutt.calculate(X, Y[1], h, ny);
+        X += h;
+        F[2] = FPR(X, Y[2]);
+        for (int i = 0; i < ny; i++){
+            DF[2][i] = F[2][i] - F[1][i];
+            D2F[2][i] = DF[2][i] - DF[1][i];
+        }
+        OUT(X, Y[2]);
+
+        Y[3] = Rungie_Kutt.calculate(X, Y[2], h, ny);
+        X += h;
+        F[3] = FPR(X, Y[3]);
+        for (int i = 0; i < ny; i++){
+            DF[3][i] = F[3][i] - F[2][i];
+            D2F[3][i] = DF[3][i] - DF[2][i];
+            D3F[3][i] = D2F[3][i] - D2F[2][i];
+        }
+        OUT(X, Y[3]);
+
+        for (int n = 4; n <= nx; n++){
+            for (int i = 0; i < ny; i++) {
+                Y[n][i] = Y[n - 1][i] + h * (F[n - 1][i] +
+                        DF[n - 1][i] / 2 +
+                        D2F[n - 1][i] * 5 / 12 +
+                        D3F[n - 1][i]*3/8);
+            }
+            X += h;
+            F[n] = FPR(X, Y[n]);
+            for (int i = 0; i < ny; i++){
+                DF[n][i] = F[n][i] - F[n - 1][i];
+                D2F[n][i] = DF[n][i] - DF[n - 1][i];
+                D3F[n][i] = D2F[n][i] - D2F[n - 1][i];
+            }
+            OUT(X,Y[n]);
+        }
     }
 }

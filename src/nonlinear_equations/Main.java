@@ -6,8 +6,9 @@ public class Main {
     private static final double h = 0.001;
 
     private static double f(double x){
-        //return Math.pow(Math.sin(x), 2) - (x / 5) - 1;
-        return ((0.1 * Math.pow(x, 3)) + Math.pow(x, 2)) - (10 * Math.sin(x)) - 8;
+       return Math.pow(Math.sin(x), 2) - (x / 5) - 1;
+//        return ((0.1 * Math.pow(x, 3)) + Math.pow(x, 2)) - (10 * Math.sin(x)) - 8;
+//        return x * x - 4;
     }
 
     private static double df(double x){
@@ -19,18 +20,15 @@ public class Main {
     }
 
     private static double findRoot(double a, double b, double eps){
-        int i = 0;
         double x0, xn;
 
         if (f(a) * d2f(a) > 0) x0 = a;
         else x0 = b;
 
         xn = x0 - f(x0) / df(x0);
-        //System.out.println(++i + "-ая итерация: " + xn);
         while (Math.abs(x0 - xn) > eps){
             x0 = xn;
             xn = x0 - f(x0) / df(x0);
-            //System.out.println(++i + "-ая итерация: " + xn);
         }
 
         return xn;
