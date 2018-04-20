@@ -34,30 +34,31 @@ public class Hook_Jeeves {
         System.out.print("Введите точность: ");
         double eps = reader.nextDouble();
 
-        double f0;
-        double[] X1;
-        double f1, ft;
-        double[] p;
-        double aMin;
-
-        do {
-            f0 = f(X0); X1 = X0.clone(); f1 = f0;
-            do {
-                X1 = exploringSearch(X1, d, f1, n);
-                ft = f(X1);
-                if (ft == f1){
-                    if (check(d, eps)){
-                        printDot(X0);
-                        return;
-                    }
-                    d = divide(d, h);
-                }
-            } while (ft == f1);
-
-            p = diff(X1.clone(), X0);
-            aMin = searchByPattern(X1, p);
-            X0 = sum(X1, multiply(p, aMin));
-        } while (true);
+//        double f0;
+//        double[] X1;
+//        double f1, ft;
+//        double[] p;
+//        double aMin;
+        printDot(X0);
+        printDot(calculate(X0, d, h, eps));
+//        do {
+//            f0 = f(X0); X1 = X0.clone(); f1 = f0;
+//            do {
+//                X1 = exploringSearch(X1, d, f1, n);
+//                ft = f(X1);
+//                if (ft == f1){
+//                    if (check(d, eps)){
+//                        printDot(X0);
+//                        return;
+//                    }
+//                    d = divide(d, h);
+//                }
+//            } while (ft == f1);
+//
+//            p = diff(X1.clone(), X0);
+//            aMin = searchByPattern(X1, p);
+//            X0 = sum(X1, multiply(p, aMin));
+//        } while (true);
     }
 
     private static double searchByPattern(double[] A, double[] p) {
@@ -88,7 +89,7 @@ public class Hook_Jeeves {
         return 100*(Math.pow(X[2] - 10*O, 2) + Math.pow(r - 1, 2)) + Math.pow(X[2], 3);
     }
 
-    private static boolean check(double[] D, double eps){
+    public static boolean check(double[] D, double eps){
         for (double d : D){
             if (d >= eps)
                 return false;
@@ -121,7 +122,7 @@ public class Hook_Jeeves {
         return X1;
     }
 
-    private static double[] multiply(double[] X, double c){
+    public static double[] multiply(double[] X, double c){
         double[] M = new double[X.length];
         for (int i = 0; i < X.length; i++){
             M[i] = X[i]*c;
@@ -129,7 +130,7 @@ public class Hook_Jeeves {
         return M;
     }
 
-    private static double[] divide(double[] X, double c){
+    public static double[] divide(double[] X, double c){
         double[] M = new double[X.length];
         for (int i = 0; i < X.length; i++){
             M[i] = X[i]/c;
@@ -137,7 +138,7 @@ public class Hook_Jeeves {
         return M;
     }
 
-    private static double[] sum(double[] A, double[] B){
+    public static double[] sum(double[] A, double[] B){
         double[] M = new double[A.length];
         for (int i = 0; i < A.length; i++){
             M[i] = A[i] + B[i];
@@ -145,7 +146,7 @@ public class Hook_Jeeves {
         return M;
     }
 
-    private static double[] diff(double[] A, double[] B){
+    public static double[] diff(double[] A, double[] B){
         double[] M = new double[A.length];
         for (int i = 0; i < A.length; i++){
             M[i] = A[i] - B[i];
@@ -153,7 +154,7 @@ public class Hook_Jeeves {
         return M;
     }
 
-    private static double Fibo(int n){
+    public static double Fibo(int n){
         if (n == 0)
             return 1;
         double[] A = new double[n + 1];
@@ -162,6 +163,32 @@ public class Hook_Jeeves {
         for (int i = 2; i <= n; i++)
             A[i] = A[i - 1] + A[i - 2];
         return A[n];
+    }
+
+    private static double[] calculate(double[] X0, double[] d, double h, double eps){
+        double f0;
+        double[] X1;
+        double f1, ft;
+        double[] p;
+        double aMin;
+
+        do {
+            f0 = f(X0); X1 = X0.clone(); f1 = f0;
+            do {
+                X1 = exploringSearch(X1, d, f1, 3);
+                ft = f(X1);
+                if (ft == f1){
+                    if (check(d, eps)){
+                        return X0;
+                    }
+                    d = divide(d, h);
+                }
+            } while (ft == f1);
+
+            p = diff(X1.clone(), X0);
+            aMin = searchByPattern(X1, p);
+            X0 = sum(X1, multiply(p, aMin));
+        } while (true);
     }
 }
 
