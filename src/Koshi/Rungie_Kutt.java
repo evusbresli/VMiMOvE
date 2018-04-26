@@ -2,10 +2,6 @@ package Koshi;
 
 public class Rungie_Kutt {
 
-    private static double f(double x, double y){
-        return 3 * Math.pow(x, 2) * y + Math.pow(x, 2) * Math.pow(Math.E, Math.pow(x, 3));
-    }
-
     public static double[] calculate(double X, double[] Y, double h, int ny){
         double[] Kn1 = Main.FPR(X, Y);
         double[] Yp = new double[ny];

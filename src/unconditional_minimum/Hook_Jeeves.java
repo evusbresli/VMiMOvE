@@ -34,31 +34,8 @@ public class Hook_Jeeves {
         System.out.print("Введите точность: ");
         double eps = reader.nextDouble();
 
-//        double f0;
-//        double[] X1;
-//        double f1, ft;
-//        double[] p;
-//        double aMin;
         printDot(X0);
         printDot(calculate(X0, d, h, eps));
-//        do {
-//            f0 = f(X0); X1 = X0.clone(); f1 = f0;
-//            do {
-//                X1 = exploringSearch(X1, d, f1, n);
-//                ft = f(X1);
-//                if (ft == f1){
-//                    if (check(d, eps)){
-//                        printDot(X0);
-//                        return;
-//                    }
-//                    d = divide(d, h);
-//                }
-//            } while (ft == f1);
-//
-//            p = diff(X1.clone(), X0);
-//            aMin = searchByPattern(X1, p);
-//            X0 = sum(X1, multiply(p, aMin));
-//        } while (true);
     }
 
     private static double searchByPattern(double[] A, double[] p) {

@@ -1,4 +1,6 @@
 package conditional_minimum;
+import java.util.Scanner;
+
 import static unconditional_minimum.Hook_Jeeves.*;
 
 public class BFM {
@@ -12,18 +14,35 @@ public class BFM {
     }
 
     public static void main(String[] args) {
-        double eps = 0.0000001;
-        double[] X = {-1, 1};
-        double[] X1;
-        double[] d = {1, 1};
-        double r = 1;
+        Scanner reader = new Scanner(System.in);
+
+        System.out.print("Введите кол-во переменных: ");
+        int n = reader.nextInt();
+
+        double[] X = new double[n];
+        for (int i = 0; i < n; i++){
+            System.out.print("\tВведите координату X" + (i + 1) + ": ");
+            X[i] = reader.nextDouble();
+        }
+        System.out.print("Базисная точка: "); printDot(X);
+
+        double[] d = new double[n];
+        System.out.println("Введите вектор приращения:");
+        for (int i = 0; i < n; i++){
+            d[i] = reader.nextDouble();
+        }
+        System.out.print("Введите коэффициент уменьшения шага: ");
+        double h = reader.nextDouble();
+        System.out.print("Введите точность: ");
+        double eps = reader.nextDouble();
+
+        System.out.print("Введите штрафной коэффициент: ");
+        double r = reader.nextDouble();
         double b = 2;
         double ch;
-        double F;
 
         do {
-            X = hook_jeeves(X, d, 4, eps, r);
-            F = f(X);
+            X = hook_jeeves(X, d, h, eps, r);
             ch = r*a(X);
             if (ch <= eps){
                 printDot(X);
@@ -35,17 +54,16 @@ public class BFM {
     }
 
     private static double f(double[] x){
-        return Math.pow(x[0], 2) + Math.pow(x[1], 2);
-        //return 100*Math.pow(x[1] + Math.pow(x[0], 2), 2) + Math.pow(1 - x[0], 2);
-//        double O = Math.atan(x[1] - x[0]);
-//        double r = Math.sqrt(Math.pow(x[0], 2) + Math.pow(x[1], 2));
-//
-//        return 100*(Math.pow(x[2] - 10*O, 2) + Math.pow(r - 1, 2)) + Math.pow(x[2], 3);
+//        return Math.pow(x[0], 2) + Math.pow(x[1], 2);
+        double O = Math.atan(x[1] - x[0]);
+        double r = Math.sqrt(Math.pow(x[0], 2) + Math.pow(x[1], 2));
+
+        return 100*(Math.pow(x[2] - 10*O, 2) + Math.pow(r - 1, 2)) + Math.pow(x[2], 3);
     }
 
     private static double a(double[] x){
-        //return R(1 - x[0] - x[1]);
-        return R(x[0]);
+        return R(1 - x[0] - x[1]);
+//        return R(x[0]);
     }
 
     private static double R(double y){
